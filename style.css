@@ -1,93 +1,23 @@
 
 body {
-  margin: 0;
-  padding: 0;
-  background-color: #5a189a;
-  color: white;
-  font-family: 'Arial', sans-serif;
-  text-align: center;
-  overflow-x: hidden;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #e0b3ff; /* mor arka plan */
+    color: #fff;
 }
-
-h1 {
-  margin-top: 40px;
-  font-size: 2.5em;
+.header {
+    text-align: center;
+    padding: 50px;
+    background-color: #a64ca6;
 }
-
-.countdown {
-  font-size: 1.8em;
-  margin: 20px 0;
-  color: #ffccff;
+.gallery {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 }
-
-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-
-#photo-area {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 40px 0;
-  gap: 20px;
-}
-
-.photo-box {
-  text-align: center;
-  z-index: 1;
-}
-
-.photo-box img {
-  width: 80%;
-  max-width: 300px;
-  border-radius: 20px;
-  margin: 10px 0;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-  transition: transform 0.3s ease;
-}
-
-.photo-box img:hover {
-  transform: scale(1.05);
-}
-
-.photo-box p {
-  margin: 0;
-  font-size: 1.1em;
-  color: #ffccff;
-}
-
-.baloon {
-  position: absolute;
-  width: 40px;
-  height: 55px;
-  background: radial-gradient(circle at 30% 30%, #ff9ce6, #ff66cc);
-  border-radius: 50% 50% 50% 50%;
-  animation: float 6s ease-in infinite, sway 2s ease-in-out infinite alternate;
-  z-index: 0;
-  opacity: 0;
-}
-
-.baloon::after {
-  content: "";
-  position: absolute;
-  bottom: -20px;
-  left: 50%;
-  width: 2px;
-  height: 20px;
-  background: #fff;
-  transform: translateX(-50%);
-}
-
-@keyframes float {
-  0% { transform: translateY(0); opacity: 1; }
-  100% { transform: translateY(-120vh); opacity: 0; }
-}
-
-@keyframes sway {
-  from { transform: translateX(-10px); }
-  to { transform: translateX(10px); }
+.gallery img {
+    width: 200px;
+    margin: 10px;
+    border: 5px solid white;
+    border-radius: 15px;
 }
