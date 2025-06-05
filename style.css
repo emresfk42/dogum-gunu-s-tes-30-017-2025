@@ -1,23 +1,45 @@
 
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #e0b3ff; /* mor arka plan */
-    color: #fff;
-}
-.header {
-    text-align: center;
-    padding: 50px;
-    background-color: #a64ca6;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to bottom right, #a64ca6, #fcb0fcb0);
+  color: white;
+  text-align: center;
 }
 .gallery {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px;
 }
 .gallery img {
-    width: 200px;
-    margin: 10px;
-    border: 5px solid white;
-    border-radius: 15px;
+  width: 200px;
+  height: auto;
+  border: 4px solid white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.letter {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  margin: 20px;
+  border-radius: 10px;
+}
+.countdown-container {
+  background: #d63384;
+  padding: 20px;
+  border-bottom: 3px solid white;
+}
+.hearts::before {
+  content: "❤️❤️❤️";
+  display: block;
+  font-size: 24px;
+  animation: float 2s infinite;
+}
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
 }
