@@ -60,7 +60,34 @@ canvas {
   color: #ffccff;
 }
 
+.baloon {
+  position: absolute;
+  width: 40px;
+  height: 55px;
+  background: radial-gradient(circle at 30% 30%, #ff9ce6, #ff66cc);
+  border-radius: 50% 50% 50% 50%;
+  animation: float 6s ease-in infinite, sway 2s ease-in-out infinite alternate;
+  z-index: 0;
+  opacity: 0;
+}
+
+.baloon::after {
+  content: "";
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  width: 2px;
+  height: 20px;
+  background: #fff;
+  transform: translateX(-50%);
+}
+
 @keyframes float {
   0% { transform: translateY(0); opacity: 1; }
-  100% { transform: translateY(-110vh); opacity: 0; }
+  100% { transform: translateY(-120vh); opacity: 0; }
+}
+
+@keyframes sway {
+  from { transform: translateX(-10px); }
+  to { transform: translateX(10px); }
 }

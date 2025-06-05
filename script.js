@@ -11,15 +11,18 @@ const xmasCountdown = setInterval(() => {
     clearInterval(xmasCountdown);
     countdown.innerHTML = "İyi ki Doğdun Aşkımmm! 🎉";
     startFireworks();
+    launchBalloons();
   } else {
     const days = Math.floor(distance / (1000 * 60 * 60 * 24));
     const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
     countdown.innerHTML = `${days}g ${hours}s ${minutes}d ${seconds}s kaldı!`;
   }
 }, 1000);
 
+// Havai fişek efekti
 const canvas = document.getElementById('fireworks');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
@@ -80,16 +83,25 @@ function startFireworks() {
   animateFireworks();
 }
 
-for (let i = 0; i < 15; i++) {
-  const balloon = document.createElement('div');
-  balloon.style.position = 'absolute';
-  balloon.style.left = Math.random() * 100 + 'vw';
-  balloon.style.bottom = '-100px';
-  balloon.style.width = '30px';
-  balloon.style.height = '40px';
-  balloon.style.background = '#ff66cc';
-  balloon.style.borderRadius = '50% 50% 50% 50%';
-  balloon.style.animation = `float ${5 + Math.random() * 5}s ease-in infinite`;
-  balloon.style.zIndex = '0';
-  document.body.appendChild(balloon);
+// Balonlar
+function randomColor() {
+  const colors = ['#ff66cc', '#ff9ce6', '#ffc0cb', '#ffd700', '#87cefa', '#98fb98'];
+  return colors[Math.floor(Math.random() * colors.length)];
+}
+
+function launchBalloons() {
+  for (let i = 0; i < 20; i++) {
+    const balloon = document.createElement('div');
+    balloon.classList.add('baloon');
+    balloon.style.left = Math.random() * 100 + 'vw';
+    balloon.style.bottom = '-100px';
+    balloon.style.background = `radial-gradient(circle at 30% 30%, ${randomColor()}, ${randomColor()})`;
+    balloon.style.animationDuration = `${6 + Math.random() * 4}s`;
+
+    setTimeout(() => {
+      balloon.style.opacity = '1';
+    }, i * 200);
+
+    document.body.appendChild(balloon);
+  }
 }
