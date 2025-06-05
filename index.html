@@ -2,37 +2,193 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>İyi ki Doğdun Birtanem ❤️</title>
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #5a189a;
+      color: white;
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      overflow-x: hidden;
+    }
+    h1 {
+      margin-top: 40px;
+      font-size: 2.5em;
+    }
+    .countdown {
+      font-size: 1.8em;
+      margin: 20px 0;
+      color: #ffccff;
+    }
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+    #photo-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 40px 0;
+      gap: 20px;
+    }
+    .photo-box {
+      text-align: center;
+      z-index: 1;
+    }
+    .photo-box img {
+      width: 80%;
+      max-width: 300px;
+      border-radius: 20px;
+      margin: 10px 0;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease;
+    }
+    .photo-box img:hover {
+      transform: scale(1.05);
+    }
+    .photo-box p {
+      margin: 0;
+      font-size: 1.1em;
+      color: #ffccff;
+    }
+    .balloon {
+      position: absolute;
+      width: 40px;
+      height: 55px;
+      background: radial-gradient(circle, #ff69b4 0%, #ff1493 100%);
+      border-radius: 50% 50% 45% 45%;
+      opacity: 0.9;
+      z-index: 0;
+      animation: floatUp 6s linear forwards;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-120vh); opacity: 0; }
+    }
+  </style>
 </head>
 <body>
   <h1>İyi ki Doğdun Birtanem ♥️</h1>
   <div class="countdown" id="countdown">Geri Sayım Yükleniyor...</div>
-
   <div id="photo-area">
-
+    <div class="photo-box">
+      <img src="foto1.jpg" alt="İlk Buluşmamız">
+      <p>İlk Buluşmamız ❤️</p>
+    </div>
+    <div class="photo-box">
+      <img src="foto2.jpg" alt="Beraber Güldüğümüz An">
+      <p>Beraber Güldüğümüz An 😊</p>
+    </div>
+    <div class="photo-box">
+      <img src="foto3.jpg" alt="Sonsuzluk">
+      <p>Sonsuzluğa Birlikte 🕊️</p>
+    </div>
     <div class="photo-box">
       <img src="foto4.jpg" alt="Birlikte Güzel Bir Gün">
       <p>Birlikte Güzel Bir Gün 💕</p>
     </div>
-    <div class="photo-box">
-      <img src="foto1.jpg" alt="İlk Buluşmamız" />
-      <p>İlk Buluşmamız ❤️</p>
-    </div>
-    <div class="photo-box">
-      <img src="foto2.jpg" alt="Beraber Güldüğümüz An" />
-      <p>Beraber Güldüğümüz An 😊</p>
-    </div>
-    <div class="photo-box">
-      <img src="foto3.jpg" alt="Sonsuzluk" />
-      <p>Sonsuzluğa Birlikte 🕊️</p>
-    </div>
   </div>
-
   <canvas id="fireworks"></canvas>
 
-  <script src="script.js"></script>
+  <script>
+    const countdown = document.getElementById('countdown');
+    const birthday = new Date("June 10, 2025 00:00:00").getTime();
+    let fireworksStarted = false;
+
+    const xmasCountdown = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = birthday - now;
+
+      if (distance <= 0) {
+        clearInterval(xmasCountdown);
+        countdown.innerHTML = "İyi ki Doğdun Aşkımmm! 🎉";
+        startFireworks();
+        launchBalloons();
+      } else {
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        countdown.innerHTML = `${days}g ${hours}s ${minutes}d ${seconds}s kaldı!`;
+      }
+    }, 1000);
+
+    // Fireworks
+    const canvas = document.getElementById('fireworks');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    function random(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    let particles = [];
+    function createParticle(x, y) {
+      const colors = ["#ff69b4", "#ffc0cb", "#ffff66", "#ffffff"];
+      return {
+        x, y,
+        radius: random(2, 4),
+        color: colors[Math.floor(Math.random() * colors.length)],
+        speedX: random(-3, 3),
+        speedY: random(-4, -1),
+        alpha: 1
+      };
+    }
+
+    function fireworkBurst() {
+      const x = random(100, canvas.width - 100);
+      const y = random(100, canvas.height / 2);
+      for (let i = 0; i < 50; i++) {
+        particles.push(createParticle(x, y));
+      }
+    }
+
+    function animateFireworks() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach((p, index) => {
+        p.x += p.speedX;
+        p.y += p.speedY;
+        p.alpha -= 0.01;
+        if (p.alpha <= 0) {
+          particles.splice(index, 1);
+        } else {
+          ctx.globalAlpha = p.alpha;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+          ctx.fillStyle = p.color;
+          ctx.fill();
+        }
+      });
+      ctx.globalAlpha = 1;
+      if (fireworksStarted) {
+        if (Math.random() < 0.05) fireworkBurst();
+        requestAnimationFrame(animateFireworks);
+      }
+    }
+
+    function startFireworks() {
+      fireworksStarted = true;
+      animateFireworks();
+    }
+
+    function launchBalloons() {
+      for (let i = 0; i < 20; i++) {
+        const balloon = document.createElement('div');
+        balloon.classList.add('balloon');
+        balloon.style.left = Math.random() * 100 + 'vw';
+        balloon.style.animationDuration = (5 + Math.random() * 5) + 's';
+        document.body.appendChild(balloon);
+        setTimeout(() => balloon.remove(), 10000);
+      }
+    }
+  </script>
 </body>
 </html>
